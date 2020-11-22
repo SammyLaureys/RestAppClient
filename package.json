@@ -17,10 +17,10 @@
   "scripts": {
     "start": "env-cmd -f .env.development.local react-scripts start",
     "build": "env-cmd -f .env.production react-scripts build",
-    "test": "env-cmd -f .env.test react-scripts test",
-    "eject": "react-scripts eject",
+    "test": "react-scripts test",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
