@@ -25,28 +25,39 @@ function App() {
         setBooks([...books, book]);
     }
 
+    function deleteBook(id){
+        setBooks(books.filter(book => book.id !== id));
+    }
+
+    async function removeBook(book){
+        const fetchOptions = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(book)
+        };
+        const response = await fetch(`${process.env.REACT_APP_CONNECTION_LOCATION}`,fetchOptions);
+        const body = await response.json();
+        deleteBook(body);
+    }
+
     useEffect(() => {
         async function getBooks() {
-            console.log(" async getBooks: start");
             setIsLoading(true);
             const response = await fetch(location);
             const body = await response.json();
-            console.log(` async getBooks: received response ${JSON.stringify(body)}`);
-            console.log(body);
             setBooks(body);
             setIsLoading(false);
-            console.log(" async getBooks: done");
         }
 
         getBooks();
-        console.log("useEffect: back after getBooks");
-        console.log("useEffect: done");
     }, []);
 
     return (<div className={"backGround"}>
             <div className={"App"}>
                 {isLoading ? <p>LOADING DATA!!!</p> : false}
-                {books.map((b) => <p key={b.title}>{b.title} - {b.author}</p>)}
+                {books.map((b) => <p key={b.title}>{b.title} - {b.author} <button onClick={() => removeBook()}>delete</button></p>)}
             </div>
             <StyledForm>
                 <Form addBook={addBook}/>
