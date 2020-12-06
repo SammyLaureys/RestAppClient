@@ -1,6 +1,6 @@
 /** @return {null} */
 export function EditForm(props) {
-    const {selectedBook, setSelectedBook, setIsLoading, updateBook} = props;
+    const {selectedBook, setSelectedBook, setIsLoading, updateBook, setError} = props;
 
     if (!selectedBook) return null;
 
@@ -8,6 +8,7 @@ export function EditForm(props) {
         if (!selectedBook) return;
         console.log("async editBook");
         setIsLoading(true);
+        setError(false);
 
         const fetchOptions = {
             method: 'PUT',
@@ -16,9 +17,16 @@ export function EditForm(props) {
         };
         const response = await fetch(`${process.env.REACT_APP_CONNECTION_LOCATION}/${book.id}`, fetchOptions);
         const body = await response.json();
-        console.log(`   async editBook: received response ${JSON.stringify(body)}`);
-        updateBook(body);
-        console.log("   async editBook: done");
+        if(response.ok){
+            console.log(`   async editBook: received response ${JSON.stringify(body)}`);
+            updateBook(body);
+            console.log("   async editBook: done");
+        } else {
+            console.log(`   async createBook: ERROR: ${response.status} - ${body.error} - ${body.message}`);
+            setIsLoading(false);
+            setError(true);
+        }
+
         setIsLoading(false);
     }
 
