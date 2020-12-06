@@ -44,7 +44,7 @@ function App() {
             {error ? <p style={{background: "orange", color: "black"}}>SOMETHING WENT WRONG!!!</p> : false}
             {books.map((b) => <p key={b.title} onClick={() => setSelectedBook({...b})}>{b.title} - {b.author}</p>)}
             <CreateForm selectedBook={selectedBook} setIsLoading={setIsLoading} setError={setError} addBook={addBook}/>
-            <EditForm selectedBook={selectedBook} setSelectedBook={setSelectedBook} setIsLoading={setIsLoading}
+            <EditForm selectedBook={selectedBook} setSelectedBook={setSelectedBook} setIsLoading={setIsLoading} setError={setError}
                       updateBook={updateBook}/>
         </div>
     );
