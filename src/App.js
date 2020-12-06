@@ -1,5 +1,5 @@
 import './App.css';
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {CreateForm} from "./components/createform";
 import {EditForm} from "./components/editform";
 
@@ -7,6 +7,7 @@ function App() {
     const [books, setBooks] = useState([]);
     const [selectedBook, setSelectedBook] = useState();
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState();
 
     console.log("render App()");
 
@@ -39,9 +40,10 @@ function App() {
 
     return (
         <div className="App">
-            {isLoading ? <p style={{background: "lightgrey"}}>LOADING DATA!!!</p> : false}
+            {isLoading ? <p style={{background: "orange", color: "black"}}>LOADING DATA!!!</p> : false}
+            {error ? <p style={{background: "orange", color: "black"}}>SOMETHING WENT WRONG!!!</p> : false}
             {books.map((b) => <p key={b.title} onClick={() => setSelectedBook({...b})}>{b.title} - {b.author}</p>)}
-            <CreateForm selectedBook={selectedBook} setIsLoading={setIsLoading} addBook={addBook}/>
+            <CreateForm selectedBook={selectedBook} setIsLoading={setIsLoading} setError={setError} addBook={addBook}/>
             <EditForm selectedBook={selectedBook} setSelectedBook={setSelectedBook} setIsLoading={setIsLoading}
                       updateBook={updateBook}/>
         </div>

@@ -1,24 +1,31 @@
 import {useState} from "react";
 
 export function CreateForm(props) {
-    const {setIsLoading, addBook} = props;
+    const {setIsLoading, setError, addBook} = props;
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
 
     async function createBook(book) {
         console.log("async createBook");
         setIsLoading(true);
+        setError(false);
 
         const fetchOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json;charset=utf-8'},
             body: JSON.stringify(book)
         };
-        const response = await fetch(`${process.env.REACT_APP_BOOKSSERVER}/books`, fetchOptions);
+        const response = await fetch(`${process.env.REACT_APP_CONNECTION_LOCATION}`, fetchOptions);
         const body = await response.json();
-        console.log(`   async createBook: received response ${JSON.stringify(body)}`);
-        addBook(body);
-        console.log("   async createBook: done");
+        if(response.ok){
+            console.log(`   async createBook: received response ${JSON.stringify(body)}`);
+            addBook(body);
+            console.log("   async createBook: done");
+        } else {
+            console.log(`   async createBook: ERROR: ${response.status} - ${body.error} - ${body.message}`);
+            setIsLoading(false);
+            setError(true);
+        }
         setIsLoading(false);
     }
 
