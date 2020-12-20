@@ -15,7 +15,7 @@ function App() {
 
 
     async function createBook(book) {
-        console.log("async createBook");
+        console.log(`async createBook ${JSON.stringify(book)}`);
         setIsLoading(true);
 
         const fetchOptions = {
@@ -34,9 +34,9 @@ function App() {
             } else {
                 console.log(`   async createBook: ERROR: ${response.status} - ${body.error} - ${body.message} `);
                 const errorMessage = body.errors &&
-                    body.errors.reduce((accumulator, error) => `${accumulator} ${error.defaultMessage} ---`, "--- ");
-                console.log(` ${JSON.stringify(body)}`);
-                console.log(` ${errorMessage}`);
+                    body.errors.reduce((accumulator, error) => `${accumulator} ${error.defaultMessage}  --- `, "--- ");
+                console.log(`   ${JSON.stringify(body)}`);
+                console.log(`   ${errorMessage}`);
                 setMessage(errorMessage || body.message);
             }
         } catch (e) {
@@ -66,11 +66,7 @@ function App() {
                 setMessage(`book ${book.title} modified`);
             } else {
                 console.log(`   async editBook: ERROR: ${response.status} - ${body.error} - ${body.message} `);
-                const errorMessage = body.errors &&
-                    body.errors.reduce((accumulator, error) => `${accumulator} ${error.defaultMessage} ---`, "--- ");
-                console.log(` ${JSON.stringify(body)}`);
-                console.log(` ${errorMessage}`);
-                setMessage(errorMessage || body.message);
+                setMessage(body.message);
             }
         } catch (e) {
             console.log(`   async deleteBook: ERROR ${e}`);

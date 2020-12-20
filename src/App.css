@@ -103,7 +103,9 @@
 .bookTitle, .bookAuthor {
     flex: 4;
 }
-
+.bookPrice {
+    flex: 2
+}
 .bookRow button {
     background-color: #f1f1f1;
     margin: 3px;
