@@ -101,25 +101,32 @@ function App() {
         setIsLoading(false);
     }
 
+    async function getBooks() {
+        console.log("   async getBooks: start");
+        setIsLoading(true);
+        try {
+            const fetchOptions = {
+                method: 'GET',
+                'credentials': 'include',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf8',
+                    authorization: "Basic " + window.btoa("sammy:sammy")
+                }
+            }
+            const response = await fetch(`${process.env.REACT_APP_CONNECTION_LOCATION}`, fetchOptions);
+            const body = await response.json();
+            console.log(`   async getBooks: received response ${JSON.stringify(body)}`);
+            setBooks(body);
+            console.log("   async getBooks: done");
+        } catch (e) {
+            console.log(`   async getBooks: ERROR ${e}`);
+            setMessage("Connection error");
+        }
+        setIsLoading(false);
+    }
+
     useEffect(() => {
         console.log("useEffect: start");
-
-        async function getBooks() {
-            console.log("   async getBooks: start");
-            setIsLoading(true);
-            try {
-                const response = await fetch(`${process.env.REACT_APP_CONNECTION_LOCATION}`);
-                const body = await response.json();
-                console.log(`   async getBooks: received response ${JSON.stringify(body)}`);
-                setBooks(body);
-                console.log("   async getBooks: done");
-            } catch (e) {
-                console.log(`   async getBooks: ERROR ${e}`);
-                setMessage("Connection error");
-            }
-            setIsLoading(false);
-        }
-
         getBooks();
         console.log("useEffect: back after getBooks");
         console.log("useEffect: done");
@@ -129,6 +136,7 @@ function App() {
         <div className="App">
             {isLoading ? <p className="isLoading">LOADING DATA!!!</p> : false}
             {message ? <p className="message" onClick={() => setMessage()}>{message}</p> : false}
+            <button onClick={getBooks}>refresh</button>
             <div className="booksList">{books.map((b) =>
                 <Book key={b.title} book={b}
                       setSelectedBook={setSelectedBook}
