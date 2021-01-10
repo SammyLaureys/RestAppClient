@@ -38,7 +38,7 @@
     }
 }
 
-.editbox {
+.modalbox {
     border: solid thin;
     margin: 50px;
     padding: 20px;
@@ -48,7 +48,7 @@
 
 .modal {
     position: absolute;
-    top: 20px;
+    top: 40px;
     bottom: 20px;
     left: 20px;
     right: 20px;
@@ -64,31 +64,31 @@
     background-color: rgba(223, 223, 223, 0.72);
 }
 
-.editboxrow {
+.formrow {
     display: flex;
     margin: 8px;
 }
 
-.editboxrow label {
+.formrow label {
     flex: 1;
     text-align: right;
     padding: 0 5px;
 }
 
-.editboxrow input {
+.formrow input {
     flex: 5;
 }
 
-.editboxbuttonrow {
+.formbuttonrow {
     margin: 8px;
 }
 
-.editboxbuttonrow button {
+.formbuttonrow button {
     margin: 0 3px;
 }
 
 .booksList {
-    margin-top: 50px;
+    margin-top: 100px;
     border: solid #d3d3d3 1px;
     border-top: none;
 }
@@ -103,10 +103,12 @@
 .bookTitle, .bookAuthor {
     flex: 4;
 }
+
 .bookPrice {
     flex: 2
 }
-.bookRow button {
+
+button {
     background-color: #f1f1f1;
     margin: 3px;
     border: none;
@@ -114,18 +116,30 @@
 
 }
 
-.message, .isLoading {
+.message, .isLoading, .loginName {
     position: fixed;
-    top: 0;
     left: 0;
     right: 0;
+    padding: 6px;
 }
 
-.message, .isLoading {
-    z-index: 5;
-    background: pink;
+.message{
+    top: 34px;
+    background: yellow;
 }
 
 .isLoading {
+    top: 34px;
     background: lightgrey;
+}
+
+.loginName {
+    top: 0;
+    height: 34px;
+    background: aliceblue;
+}
+
+.loginName button {
+    position: absolute;
+    right: 0;
 }
